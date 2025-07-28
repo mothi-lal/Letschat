@@ -1,5 +1,3 @@
-## Letschat is a chatting app
+## Letschat 
 
-trying to build a chatting app
-
-learning by building this app
+**Letschat** is a simple real-time chatting app designed to help me learn full-stack development by building it hands-on.
