@@ -12,3 +12,12 @@ Connects to the chat server (via IP + port).
 Sends messages to the server.
 Listens for messages from the server and prints them.
 Keeps running until user quits.
+
+dont run it still beacuse server.py has to br built
+
+## Creating server.py
+
+now creating a server which will 
+Accept multiple clients
+Receive messages from each client
+Broadcast messages to all other clients
