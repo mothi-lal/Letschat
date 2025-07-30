@@ -37,7 +37,7 @@ recv()
 **socket.socket() creates a new socket** 
 used the parameters like AF_INET and SOCK_STREAM
 
-**AF_INET :**is the ADDRESS FAMIlY means we are using IPv4  address like 127.0.0.1 and **SOCK_STREAM** is the socket type means here we are using TCP, a reliable connection based protocol. 
+**AF_INET** is the ADDRESS FAMIlY means we are using IPv4  address like 127.0.0.1 and **SOCK_STREAM** is the socket type means here we are using TCP, a reliable connection based protocol. 
 
 together we are saying to python to create a TCP socket that uses IPv4
 
