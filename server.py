@@ -1,5 +1,7 @@
 import socket
 import threading
+from datetime import datetime
+
 
 host = '127.0.0.1'
 port = 55556
@@ -11,15 +13,24 @@ server.listen()
 clients = []
 nicknames = []
 
-def broadcast(message):
+def broadcast(message, sender_client=None):
+    now = datetime.now()
+    timestamp = now.strftime("%Y-%m-%d %H:%M")
     for client in clients:
-        client.send(message)
+        if client != sender_client:
+            try:
+                client.send(f"[{timestamp}] {message}".encode('utf-8'))
+            except:
+                client.close()
+                clients.remove(client)
 
 def handle(client):
     while True:
         try:
-            message = client.recv(1024)
-            broadcast(message)
+            message = client.recv(1024).decode('utf-8')
+            index = clients.index(client)
+            nickname = nicknames[index]
+            broadcast(f"{nickname}: {message}", sender_client=client)
         except:
             index = clients.index(client)
             clients.remove(client)
