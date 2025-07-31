@@ -42,7 +42,7 @@ def receive():
 # Function to write messages to the server
 def write():
     while True:
-        message = input_msg
+        message = input("")
 
         client.send(message.encode('utf-8'))
 
