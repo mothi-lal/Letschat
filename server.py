@@ -22,23 +22,28 @@ def broadcast(message, sender_client=None):
                 client.send(f"[{timestamp}] {message}".encode('utf-8'))
             except:
                 client.close()
-                clients.remove(client)
+                if client in clients:
+                    clients.remove(client)
+                    nickname = nicknames[clients.index(client)]
+                    broadcast(f"{nickname} has been disconnected.".encode('utf-8'))
+                    nicknames.remove(nickname)
 
 def handle(client):
     while True:
         try:
             message = client.recv(1024).decode('utf-8')
-            index = clients.index(client)
-            nickname = nicknames[index]
-            broadcast(f"{nickname}: {message}", sender_client=client)
+            if not message:
+                raise Exception("No message received")
+            broadcast(message, sender_client=client)
         except:
-            index = clients.index(client)
-            clients.remove(client)
-            client.close()
-            nickname = nicknames[index]
-            broadcast(f'{nickname} left the chat!'.encode('utf-8'))
-            nicknames.remove(nickname)
-            break
+            if client in clients:
+                index = clients.index(client)
+                nickname = nicknames[index]
+                clients.remove(client)
+                nicknames.remove(nickname)
+                client.close()
+                broadcast(f'{nickname} left the chat!'.encode('utf-8'))
+                break
 
 def receive():
     while True:
