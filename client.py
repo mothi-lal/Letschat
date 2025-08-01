@@ -2,12 +2,17 @@ import socket
 import threading
 from colorama import Fore, Style
 import datetime
+import sys
 
 # Create a TCP/IP socket
 client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
 # Connect the socket to the server
-client.connect(('10.184.17.122', 55556))
+try:
+    client.connect(('10.184.17.122', 55556))  # Replace IP if server changes
+except Exception as e:
+    print(f"Could not connect to server: {e}")
+    sys.exit()
 
 # Ask for username
 nickname = input("Choose your nickname: ")
@@ -43,8 +48,15 @@ def receive():
 def write():
     while True:
         message = input("")
-
-        client.send(message.encode('utf-8'))
+        if message.lower() == '/quit':
+            quit_msg = f"{nickname} has left the chat."
+            client.send(quit_msg.encode('utf-8'))
+            client.close()
+            print("Disconnected from chat.")
+            break
+        else:
+            full_message = f"{nickname}: {message}"
+            client.send(full_message.encode('utf-8'))
 
 
 
